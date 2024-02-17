@@ -5,7 +5,6 @@ import * as z from "zod"
 
 import {
   Button,
-  Card,
   Form,
   FormControl,
   FormField,
@@ -82,83 +81,79 @@ const LoginForm = () => {
   }
 
   return (
-    <Card className="flex flex-col gap-5 items-center px-4 py-4 sm:px-12 sm:py-8 mx-auto max-w-[650px]">
-      <h3 className="text-center">Create an account</h3>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+      <FormField
+          control={form.control}
+          name="firstName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>First name</FormLabel>
+              <FormControl>
+                <Input placeholder="First name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>First name</FormLabel>
-                <FormControl>
-                  <Input placeholder="First name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Last name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Last name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="Email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            rules={{ required: "Password is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input placeholder="Password" type="password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="confirmPassword"
-            rules={{ required: "Password is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Confirm password</FormLabel>
-                <FormControl>
-                  <Input placeholder="Confirm password" type="password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <p>The use of this account is governed by Lux's <Link href='https://docs.google.com/document/d/1nBiOFMq1olWUKsgFjPRHvYIzPZsHdYjDgad0rc4Ryf4/preview'>terms and conditions</Link>.</p>
-          <Button type="submit" className="w-full sm:w-fit sm:float-right min-w-[150px] mt-4" disabled={!form.formState.isDirty}>Continue</Button>
-        </form>
-      </Form>
-      <p className="self-end">Already have an account? <Link href='/login'>Log In</Link></p>
-    </Card>
+          control={form.control}
+          name="lastName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Last name</FormLabel>
+              <FormControl>
+                <Input placeholder="Last name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          rules={{ required: "Password is required" }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input placeholder="Password" type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          rules={{ required: "Password is required" }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirm password</FormLabel>
+              <FormControl>
+                <Input placeholder="Confirm password" type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <p>The use of this account is governed by Lux's <Link href='https://docs.google.com/document/d/1nBiOFMq1olWUKsgFjPRHvYIzPZsHdYjDgad0rc4Ryf4/preview'>terms and conditions</Link>.</p>
+        <Button type="submit" className="w-full sm:w-fit sm:float-right !min-w-[150px] mt-4" disabled={!form.formState.isDirty}>Continue</Button>
+      </form>
+    </Form>
   )
 }
 

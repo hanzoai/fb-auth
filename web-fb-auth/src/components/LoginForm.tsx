@@ -5,7 +5,6 @@ import * as z from "zod"
 
 import {
   Button,
-  Card,
   Form,
   FormControl,
   FormField,
@@ -40,43 +39,38 @@ const LoginForm = () => {
   }
 
   return (
-    <Card className="flex flex-col gap-5 items-center px-4 py-4 sm:px-12 sm:py-8 mx-auto max-w-[650px]">
-      <h3 className="text-center">Log in</h3>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="Email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            rules={{ required: "Password is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input placeholder="Password" type="password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="w-full sm:w-fit sm:float-right min-w-[150px]" disabled={!form.formState.isDirty}>Login</Button>
-        </form>
-      </Form>
-      <Link href='/requestPasswordUpdate' className="self-end">Forgot password?</Link>
-      <p className="self-end">Don't have an account? <Link href='/signup'>Join now</Link></p>
-    </Card>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          rules={{ required: "Password is required" }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input placeholder="Password" type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="w-full sm:w-fit sm:float-right !min-w-[150px]" disabled={!form.formState.isDirty}>Login</Button>
+      </form>
+    </Form>
   )
 }
 

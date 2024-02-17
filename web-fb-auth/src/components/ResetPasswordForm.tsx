@@ -5,7 +5,6 @@ import * as z from "zod"
 
 import {
   Button,
-  Card,
   Form,
   FormControl,
   FormField,
@@ -35,28 +34,24 @@ const ResetPasswordForm = () => {
   }
 
   return (
-    <Card className="flex flex-col gap-5 items-center px-4 py-4 sm:px-12 sm:py-8 mx-auto max-w-[650px]">
-      <h3 className="text-center">Reset Password</h3>
-      <p className="!text-center">Please enter the email associated with your account. A password update link will be sent there.</p>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="Email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="w-full sm:w-fit sm:float-right min-w-[150px]" disabled={!form.formState.isDirty}>Send Link</Button>
-        </form>
-      </Form>
-    </Card>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="w-full sm:w-fit sm:float-right !min-w-[150px]" disabled={!form.formState.isDirty}>Send Link</Button>
+      </form>
+    </Form>
   )
 }
 

@@ -1,15 +1,14 @@
 import React  from 'react'
-import { ApplyTypography, Main } from '@hanzo/ui/primitives'
+import { Main } from '@hanzo/ui/primitives'
 
 import { Footer } from '@hanzo/ui/common'
 import siteDef from '@/siteDef'
-import SignupForm from '@/components/SignupForm'
+import signupForm from '@/content/signup-form'
+import { ContentComponent } from '@hanzo/ui/blocks'
 
 const LoginPage = () => (<>
   <Main className='md:flex-row md:gap-4 '>
-    <ApplyTypography className='w-full'>
-      <SignupForm />
-    </ApplyTypography>
+    <ContentComponent blocks={signupForm} />
   </Main>
   <Footer siteDef={siteDef} className='max-w-screen-2xl w-full pt-16 lg:mx-auto ' />
 </>)
