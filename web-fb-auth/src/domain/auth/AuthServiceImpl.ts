@@ -41,15 +41,15 @@ const adminBouncer = new Bouncer([
 class AuthServiceImpl implements AuthService  {
  
   currentFirebaseUser: firebase.default.User | undefined = undefined
-  currentHanzoFBAuthUser: HanzoFBAuthUser | undefined = undefined
+  currentHanzoUser: HanzoFBAuthUser | undefined = undefined
   authStateLoading: boolean = false   // firebaseUser status is loading
-  authQueryLoading: boolean = false      // any other query: currentHanzoFBAuthUser, clientOrgs, etc
+  authQueryLoading: boolean = false      // any other query: currentHanzoUser, clientOrgs, etc
   disposers: (() => void)[] = []
 
   constructor() {
     makeObservable(this, {
       currentFirebaseUser: observable,
-      currentHanzoFBAuthUser: observable,
+      currentHanzoUser: observable,
       authStateLoading: observable,
       authQueryLoading: observable,
     })
@@ -76,7 +76,7 @@ class AuthServiceImpl implements AuthService  {
         else {
           this._setCurrentFirebaseUser(fbUser)
           this._setQueryLoading(true)
-          if (!this.currentHanzoFBAuthUser || this.currentHanzoFBAuthUser.uid !== fbUser.uid) {
+          if (!this.currentHanzoUser || this.currentHanzoUser.uid !== fbUser.uid) {
             await this._refreshHanzoFBAuthUser()
           }
 
@@ -84,15 +84,15 @@ class AuthServiceImpl implements AuthService  {
             // but the HanzoFBAuthUser hasn't yet. This can't be avoided.
             // We must call createNewUserFromEmailAndPassword() before creating the 
             // corresponding HanzoFBAuthUser, since we need to know the uid to assign.
-          if (!!this.currentHanzoFBAuthUser) {
+          if (!!this.currentHanzoUser) {
             this.disposers.push( await firestore
               .collection(COLLECTIONS.HANZO_USERS)
               .doc(fbUser.uid)
               .onSnapshot( async (doc) => {
                 if (doc.exists) {
-                  let HanzoFBAuthUser = doc.data() as HanzoFBAuthUser
-                  HanzoFBAuthUser = await this._getHanzoFBAuthUserTransientData(HanzoFBAuthUser)
-                  this._setCurrentHanzoFBAuthUser(HanzoFBAuthUser)
+                  let hanzoUser = doc.data() as HanzoFBAuthUser
+                  hanzoUser = await this._getHanzoFBAuthUserTransientData(hanzoUser)
+                  this._setCurrentHanzoFBAuthUser(hanzoUser)
                 }
               })
             )
@@ -108,7 +108,7 @@ class AuthServiceImpl implements AuthService  {
   }
 
   private _setCurrentHanzoFBAuthUser(u: HanzoFBAuthUser | undefined): void {
-    this.currentHanzoFBAuthUser = u
+    this.currentHanzoUser = u
   }
 
   private _setQueryLoading(b: boolean): void {this.authQueryLoading = b} 
@@ -410,7 +410,7 @@ class AuthServiceImpl implements AuthService  {
         }
         this._setQueryLoading(true)
         this._setCurrentHanzoFBAuthUser(await this._fetchHanzoFBAuthUser(this.currentFirebaseUser.uid))
-        if (!this.currentHanzoFBAuthUser) {
+        if (!this.currentHanzoUser) {
           reject('No HanzoFBAuthUser corresponding to logged in user found.')
           this._setQueryLoading(false)
           return
@@ -475,7 +475,7 @@ class AuthServiceImpl implements AuthService  {
           // corresponding HanzoFBAuthUser, since we need to know the uid to assign.
         if (!HanzoFBAuthUser) {
           userUnsubscribe = await firestore
-            .collection(COLLECTIONS.PAYMINTO_USERS)
+            .collection(COLLECTIONS.HANZO_USERS)
             .doc(fbUser.uid)
             .onSnapshot( async (doc) => {
               if (doc.exists) {
