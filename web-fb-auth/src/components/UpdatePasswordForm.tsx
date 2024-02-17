@@ -14,6 +14,8 @@ import {
   Input,
 } from '@hanzo/ui/primitives'
 import { useForm } from 'react-hook-form'
+import { useAuthService } from '@/domain/auth'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 const formSchema = z.object({
   password: z.string().min(6, {
@@ -54,6 +56,10 @@ const formSchema = z.object({
 )
 
 const UpdatePasswordForm = () => {
+  const auth = useAuthService()
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,10 +68,11 @@ const UpdatePasswordForm = () => {
     },
   })
  
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    await auth.completePasswordUpdate(searchParams.get('oobcode') as string, values.password)
+    if (searchParams.get('origin')) {
+      router.push(searchParams.get('origin') as string)
+    }
   }
 
   return (

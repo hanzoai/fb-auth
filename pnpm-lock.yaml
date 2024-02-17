@@ -300,12 +300,21 @@ importers:
       '@next/mdx':
         specifier: 14.1.0
         version: 14.1.0(@mdx-js/loader@3.0.1)(@mdx-js/react@3.0.1)
+      firebase:
+        specifier: 9.3.0
+        version: 9.3.0
       formik:
         specifier: ^2.2.6
         version: 2.4.5(react@18.2.0)
+      generate-unique-id:
+        specifier: ^2.0.1
+        version: 2.0.3
       markdown-to-jsx:
         specifier: ^7.3.2
         version: 7.4.1(react@18.2.0)
+      mobx:
+        specifier: ^6.3.7
+        version: 6.12.0
       next:
         specifier: 14.1.0
         version: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0)

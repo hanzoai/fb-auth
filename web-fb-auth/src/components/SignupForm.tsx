@@ -15,6 +15,9 @@ import {
 } from '@hanzo/ui/primitives'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
+import { useAuthService } from '@/domain/auth'
+import type { CreateUserParams } from '../../../shared/types'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 const formSchema = z.object({
   firstName: z.string().min(2, {
@@ -62,6 +65,10 @@ const formSchema = z.object({
 )
 
 const LoginForm = () => {
+  const auth = useAuthService()
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -73,10 +80,21 @@ const LoginForm = () => {
     },
   })
  
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      await auth.createUser({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        password: values.password
+      } as CreateUserParams)
+      if (searchParams.get('origin')) {
+        router.push(searchParams.get('origin') as string)
+      }
+    } 
+    catch (e) {
+      console.error(e)
+    }
   }
 
   return (
