@@ -7,7 +7,7 @@ import siteDef from '@/siteDef'
 
 const LoginPage = () => (<>
   <Main className='md:flex-row md:gap-4 '>
-    <ApplyTypography>
+    <ApplyTypography className='w-full'>
       <LoginForm />
     </ApplyTypography>
   </Main>

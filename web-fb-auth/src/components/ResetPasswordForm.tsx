@@ -15,21 +15,16 @@ import {
   Input,
 } from "@hanzo/ui/primitives"
 import { useForm } from "react-hook-form"
-import Link from "next/link"
 
 const formSchema = z.object({
   email: z.string().email("This is not a valid email."),
-  password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
-  }),
 })
 
-const LoginForm = () => {
+const ResetPasswordForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      password: ""
     },
   })
  
@@ -41,7 +36,8 @@ const LoginForm = () => {
 
   return (
     <Card className="flex flex-col gap-5 items-center px-4 py-4 sm:px-12 sm:py-8 mx-auto max-w-[650px]">
-      <h3 className="text-center">Log in</h3>
+      <h3 className="text-center">Reset Password</h3>
+      <p className="!text-center">Please enter the email associated with your account. A password update link will be sent there.</p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
           <FormField
@@ -57,27 +53,11 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="password"
-            rules={{ required: "Password is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input placeholder="Password" type="password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="w-full sm:w-fit sm:float-right min-w-[150px]" disabled={!form.formState.isDirty}>Login</Button>
+          <Button type="submit" className="w-full sm:w-fit sm:float-right min-w-[150px]" disabled={!form.formState.isDirty}>Send Link</Button>
         </form>
       </Form>
-      <Link href='/requestPasswordUpdate' className="self-end">Forgot password?</Link>
-      <p className="self-end">Don't have an account? <Link href='/signup'>Join now</Link></p>
     </Card>
   )
 }
 
-export default LoginForm
+export default ResetPasswordForm

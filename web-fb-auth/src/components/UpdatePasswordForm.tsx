@@ -15,16 +15,8 @@ import {
   Input,
 } from "@hanzo/ui/primitives"
 import { useForm } from "react-hook-form"
-import Link from "next/link"
 
 const formSchema = z.object({
-  firstName: z.string().min(2, {
-    message: "First name must be at least 2 characters.",
-  }),
-  lastName: z.string().min(2, {
-    message: "Last name must be at least 2 characters.",
-  }),
-  email: z.string().email("This is not a valid email."),
   password: z.string().min(6, {
     message: "Password must be at least 6 characters.",
   }),
@@ -63,13 +55,10 @@ const formSchema = z.object({
   }
 )
 
-const LoginForm = () => {
+const UpdatePasswordForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
       password: "",
       confirmPassword: ""
     },
@@ -83,49 +72,10 @@ const LoginForm = () => {
 
   return (
     <Card className="flex flex-col gap-5 items-center px-4 py-4 sm:px-12 sm:py-8 mx-auto max-w-[650px]">
-      <h3 className="text-center">Create an account</h3>
+      <h3 className="text-center">Update Password</h3>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
         <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>First name</FormLabel>
-                <FormControl>
-                  <Input placeholder="First name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Last name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Last name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="Email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
             control={form.control}
             name="password"
             rules={{ required: "Password is required" }}
@@ -153,13 +103,11 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-          <p>The use of this account is governed by Lux's <Link href='https://docs.google.com/document/d/1nBiOFMq1olWUKsgFjPRHvYIzPZsHdYjDgad0rc4Ryf4/preview'>terms and conditions</Link>.</p>
-          <Button type="submit" className="w-full sm:w-fit sm:float-right min-w-[150px] mt-4" disabled={!form.formState.isDirty}>Continue</Button>
+          <Button type="submit" className="w-full sm:w-fit sm:float-right min-w-[150px]" disabled={!form.formState.isDirty}>Send Link</Button>
         </form>
       </Form>
-      <p className="self-end">Already have an account? <Link href='/login'>Log In</Link></p>
     </Card>
   )
 }
 
-export default LoginForm
+export default UpdatePasswordForm
