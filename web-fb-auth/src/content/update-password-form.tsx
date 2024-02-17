@@ -1,5 +1,5 @@
-import UpdatePasswordForm from "@/components/UpdatePasswordForm"
-import type { CarteBlancheBlock, ElementBlock, EnhHeadingBlock } from "@hanzo/ui/blocks"
+import UpdatePasswordForm from '@/components/UpdatePasswordForm'
+import type { CarteBlancheBlock, ElementBlock, EnhHeadingBlock } from '@hanzo/ui/blocks'
 
 export default {
     blockType: 'carte-blanche',

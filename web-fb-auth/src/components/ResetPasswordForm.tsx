@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
 
 import {
   Button,
@@ -12,18 +12,18 @@ import {
   FormLabel,
   FormMessage,
   Input,
-} from "@hanzo/ui/primitives"
-import { useForm } from "react-hook-form"
+} from '@hanzo/ui/primitives'
+import { useForm } from 'react-hook-form'
 
 const formSchema = z.object({
-  email: z.string().email("This is not a valid email."),
+  email: z.string().email('This is not a valid email.'),
 })
 
 const ResetPasswordForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      email: '',
     },
   })
  
@@ -35,21 +35,21 @@ const ResetPasswordForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+      <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
         <FormField
           control={form.control}
-          name="email"
+          name='email'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Email" {...field} />
+                <Input placeholder='Email' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full sm:w-fit sm:float-right !min-w-[150px]" disabled={!form.formState.isDirty}>Send Link</Button>
+        <Button type='submit' className='w-full sm:w-fit sm:float-right !min-w-[150px]' disabled={!form.formState.isDirty}>Send Link</Button>
       </form>
     </Form>
   )

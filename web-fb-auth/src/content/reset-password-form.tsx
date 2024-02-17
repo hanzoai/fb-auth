@@ -1,5 +1,5 @@
-import ResetPasswordForm from "@/components/ResetPasswordForm"
-import type { CarteBlancheBlock, ElementBlock, EnhHeadingBlock } from "@hanzo/ui/blocks"
+import ResetPasswordForm from '@/components/ResetPasswordForm'
+import type { CarteBlancheBlock, ElementBlock, EnhHeadingBlock } from '@hanzo/ui/blocks'
 
 export default {
     blockType: 'carte-blanche',

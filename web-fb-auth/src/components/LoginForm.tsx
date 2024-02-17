@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
 
 import {
   Button,
@@ -12,14 +12,13 @@ import {
   FormLabel,
   FormMessage,
   Input,
-} from "@hanzo/ui/primitives"
-import { useForm } from "react-hook-form"
-import Link from "next/link"
+} from '@hanzo/ui/primitives'
+import { useForm } from 'react-hook-form'
 
 const formSchema = z.object({
-  email: z.string().email("This is not a valid email."),
+  email: z.string().email('This is not a valid email.'),
   password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
+    message: 'Password must be at least 6 characters.',
   }),
 })
 
@@ -27,8 +26,8 @@ const LoginForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: ""
+      email: '',
+      password: ''
     },
   })
  
@@ -40,15 +39,15 @@ const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+      <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
         <FormField
           control={form.control}
-          name="email"
+          name='email'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Email" {...field} />
+                <Input placeholder='Email' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -56,19 +55,19 @@ const LoginForm = () => {
         />
         <FormField
           control={form.control}
-          name="password"
-          rules={{ required: "Password is required" }}
+          name='password'
+          rules={{ required: 'Password is required' }}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="Password" type="password" {...field} />
+                <Input placeholder='Password' type='password' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full sm:w-fit sm:float-right !min-w-[150px]" disabled={!form.formState.isDirty}>Login</Button>
+        <Button type='submit' className='w-full sm:w-fit sm:float-right !min-w-[150px]' disabled={!form.formState.isDirty}>Login</Button>
       </form>
     </Form>
   )
