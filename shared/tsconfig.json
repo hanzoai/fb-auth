@@ -1,13 +1,16 @@
 {
   "extends": "../tsconfig.base.json",
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
   ],
   "exclude": [
     "node_modules",
   ],
   "compilerOptions": {
+    "outDir": "lib",
+    "rootDir": "src",
+    "sourceMap": true,
     "declaration": false,
     "noEmit": true
   }
