@@ -12,5 +12,5 @@ export type {
 export type { NounDisplay } from './NounDisplay'
 export type { ImageDef } from './ImageDef'
 export type { NavElement } from './NavElement'
-export type { SimpleHandler, ChangeHandler } from './ChangeHandler<T>'
+export type { SimpleHandler, ChangeHandler } from './ChangeHandler_T'
 export type { BoundingRect } from './BoundingRect'
