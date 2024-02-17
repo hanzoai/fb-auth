@@ -26,7 +26,7 @@ const firestore = firebase.firestore()
 
 auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
 
-if (process.env.FIREBASE_USE_EMULATOR === 'true') {
+if (process.env.NEXT_PUBLIC_FIREBASE_USE_EMULATOR === 'true') {
   firebase.functions().useEmulator('localhost', 5001)
   auth.useEmulator('http://localhost:9099')
 }

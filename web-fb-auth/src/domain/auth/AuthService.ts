@@ -1,4 +1,3 @@
-
 import type { 
   ClientOrgParams,
   CreateUserParams,
@@ -9,7 +8,6 @@ import type {
 import type { StatusResponse } from '../../../../shared'
 
 interface AuthService {
-
   currentFirebaseUser: firebase.default.User | undefined
   currentHanzoFBAuthUser: HanzoFBAuthUser | undefined
   authStateLoading: boolean   // firebaseUser status is loading
