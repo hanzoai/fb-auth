@@ -123,9 +123,7 @@ export const requestPasswordUpdate = onCall(
 
     const request = data as RequestPasswordUpdateParams
     try {
-      let link = await admin.auth().generatePasswordResetLink(request.email, {
-        url: 'https://hanzoai.com', // we will ignore this, but it's required by typescript and the API expect it.
-      })
+      let link = await admin.auth().generatePasswordResetLink(request.email)
 
       let userDocs = await admin.firestore().collection(COLLECTIONS.HANZO_USERS)
         .where('email', '==', request.email)
