@@ -291,6 +291,9 @@ importers:
 
   web-fb-auth:
     dependencies:
+      '@hanzo/fb-auth-shared':
+        specifier: workspace:*
+        version: link:../shared
       '@hanzo/ui':
         specifier: 0.5.14
         version: 0.5.14(@next/mdx@14.1.0)(@types/react-dom@18.2.19)(@types/react@18.2.56)(date-fns@3.3.1)(next-themes@0.2.1)(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.1)
@@ -306,9 +309,6 @@ importers:
       formik:
         specifier: ^2.2.6
         version: 2.4.5(react@18.2.0)
-      generate-unique-id:
-        specifier: ^2.0.1
-        version: 2.0.3
       markdown-to-jsx:
         specifier: ^7.3.2
         version: 7.4.1(react@18.2.0)
@@ -336,6 +336,9 @@ importers:
       react-hook-form:
         specifier: ^7.50.1
         version: 7.50.1(react@18.2.0)
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
       zod:
         specifier: ^3.22.4
         version: 3.22.4
@@ -358,6 +361,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.18
         version: 18.2.19
+      '@types/uuid':
+        specifier: ^9.0.8
+        version: 9.0.8
       autoprefixer:
         specifier: ^10.4.14
         version: 10.4.17(postcss@8.4.35)
@@ -10001,6 +10007,7 @@ packages:
       react: 16.14.0
       scheduler: 0.19.1
     dev: false
+    bundledDependencies: false
 
   /react-dom@18.2.0(react@18.2.0):
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
@@ -10309,6 +10316,7 @@ packages:
       object-assign: 4.1.1
       prop-types: 15.8.1
     dev: false
+    bundledDependencies: false
 
   /react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}

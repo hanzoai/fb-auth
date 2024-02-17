@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 
 export default {
-  metadataBase: new URL('https://lux.credit'),
+  metadataBase: new URL('https://login.lux.partners'),
   title: {
     default: 'Lux Login',
     template: '%s | Lux Login',
   },
-  description: 'Explore your swaps',
-  applicationName: 'Lux Bridge Explorer',
+  description: 'Login to the Lux family of webistes',
+  applicationName: 'Lux Login',
   authors: {name: 'Lux Dev team'},
   keywords: "Lux Network, Blockchain Bridge, Multi-Chain, EVM, Solana, Bitcoin, Cross-Chain, Interoperability, Cryptocurrency, Blockchain Technology",
   icons: [

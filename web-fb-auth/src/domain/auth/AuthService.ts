@@ -3,9 +3,9 @@ import type {
   CreateUserParams,
   HanzoFBAuthUser,
   UserOrgsResponse,
-} from '../../../../shared/types'
+} from '@hanzo/fb-auth-shared/types'
 
-import type { StatusResponse } from '../../../../shared'
+import type { StatusResponse } from '@hanzo/fb-auth-shared'
 
 interface AuthService {
   currentFirebaseUser: firebase.default.User | undefined

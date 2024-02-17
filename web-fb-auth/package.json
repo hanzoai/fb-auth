@@ -13,12 +13,12 @@
     "ul:ui": "pnpm unlink -g @hanzo/ui"
   },
   "dependencies": {
+    "@hanzo/fb-auth-shared": "workspace:*",
     "@hanzo/ui": "0.5.14",
     "@hookform/resolvers": "^3.3.4",
     "@next/mdx": "14.1.0",
     "firebase": "9.3.0",
     "formik": "^2.2.6",
-    "generate-unique-id": "^2.0.1",
     "markdown-to-jsx": "^7.3.2",
     "mobx": "^6.3.7",
     "next": "14.1.0",
@@ -28,6 +28,7 @@
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",
+    "uuid": "^9.0.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -37,6 +38,7 @@
     "@types/mdx": "^2.0.9",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
+    "@types/uuid": "^9.0.8",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24",
     "postcss-import": "^15.1.0",

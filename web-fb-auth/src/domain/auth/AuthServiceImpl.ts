@@ -2,10 +2,9 @@ import {
   action,
   makeObservable, 
   observable, 
-  reaction, 
 } from 'mobx'
 
-import generateUniqueId from 'generate-unique-id'
+import { v4 as generateUniqueId } from 'uuid'
  
 import type {
   ClientOrg,
@@ -14,29 +13,27 @@ import type {
   ClientOrgParams,
   UserOrgsResponse,
   HanzoFBAuthUser 
-} from '../../../../shared/types'
+} from '@hanzo/fb-auth-shared/types'
  
-import { COLLECTIONS } from '../../../../shared'
-import type { StatusResponse } from '../../../../shared'
-import { errorToString } from '../../../../shared/util'
+import { COLLECTIONS, type StatusResponse  } from '@hanzo/fb-auth-shared'
+import { errorToString } from '@hanzo/fb-auth-shared/util'
 
-import Bouncer from '../../util/Bouncer'
+import Bouncer from '@/util/Bouncer'
 
 import type AuthService from './AuthService'
 import { 
   requestPasswordUpdate as requestPasswordUpdate_remote,
   auth as firebaseAuth,
   firestore
-} from './firebase'
+} from './firebaseConf'
 
 const EXT = {
   baseUrlForEmailLinks: process.env.EMAIL_LINK_BASE_URL
 }
  
-const adminBouncer = new Bouncer([
-  'artemisprimedev@gmail.com',
-  'zachkelling@gmail.com',
-])
+const adminBouncer = new Bouncer(process.env.NEXT_PUBLIC_HANZO_AUTH_ADMIN_EMAILS ? 
+  process.env.NEXT_PUBLIC_HANZO_AUTH_ADMIN_EMAILS.split('|') : []
+)
  
 class AuthServiceImpl implements AuthService  {
  
