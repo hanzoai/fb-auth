@@ -14,7 +14,7 @@ import {
   Input,
 } from '@hanzo/ui/primitives'
 import { useForm } from 'react-hook-form'
-import { useAuthService } from '@/domain/auth'
+import { useAuthService } from '@/auth'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 

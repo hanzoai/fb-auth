@@ -1,7 +1,7 @@
 'use client'
 
 import * as z from 'zod'
-import { useAuthService } from '@/domain/auth'
+import { useAuthService } from '@/auth'
 import type { ClientOrgParams, CreateUserParams } from '../../../shared/types'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'

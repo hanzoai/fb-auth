@@ -14,7 +14,7 @@ import {
   Input,
 } from '@hanzo/ui/primitives'
 import { useForm } from 'react-hook-form'
-import { useAuthService } from '@/domain/auth'
+import { useAuthService } from '@/auth'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 const formSchema = z.object({
