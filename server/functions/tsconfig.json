@@ -8,13 +8,12 @@
     "rootDir": "src",
     "sourceMap": true,
     "strict": true,
-    "target": "es2017",
+    "target": "esnext",
     "skipLibCheck": true,
     "esModuleInterop": true,
     //"resolveJsonModule": true,
     "baseUrl": "./",
     "allowJs": true,
-    "jsx": "react",
   },
   "include": [ "src" ]
 }

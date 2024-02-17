@@ -1,0 +1,18 @@
+dist/
+node_modules/
+
+.vscode/
+out/
+**/etc/
+
+package-lock.json
+# yarn.lock
+
+report.*.json 
+
+*.orig
+
+.env
+
+#npm configuration file
+.npmrc

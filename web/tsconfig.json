@@ -1,0 +1,29 @@
+// https://www.carlrippon.com/creating-react-app-with-typescript-eslint-with-webpack5/
+
+{
+  "extends": "../tsconfig.base.json",
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+  ],
+  "exclude": [
+    "node_modules/",
+  ],
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["./src/*"],
+      "~assets/*": ["./assets/*"],
+      "~scripts/*": ["./scripts/*"],
+      // https://remarkablemark.org/blog/2023/06/30/react-types-reactnode-error/
+      "react": ["node_modules/@types/react"],
+      "@hanzo/ui": ["node_modules/@hanzo/ui"]
+    }
+  }
+}
+
