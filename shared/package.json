@@ -1,0 +1,24 @@
+{
+  "name": "@hanzo/fb-auth-shared",
+  "version": "0.1.0",
+  "description": "Shared types and utils for server and FE of fb-auth",
+  "author": "Hanzo AI, Inc.",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/fb-auth.git",
+    "directory": "shared"
+  },
+  "scripts": {
+    "build": "tsc",
+    "tc": "tsc",
+    "clean": "rm -rf node_modules"
+  },
+  "dependencies": {
+  },
+  "peerDependencies": {
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
