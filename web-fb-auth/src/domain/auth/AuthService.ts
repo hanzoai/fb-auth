@@ -9,9 +9,9 @@ import type { StatusResponse } from '../../../../shared'
 
 interface AuthService {
   currentFirebaseUser: firebase.default.User | undefined
-  currentHanzoFBAuthUser: HanzoFBAuthUser | undefined
+  currentHanzoUser: HanzoFBAuthUser | undefined
   authStateLoading: boolean   // firebaseUser status is loading
-  authQueryLoading: boolean       // any other query: currentHanzoFBAuthUser, clientOrgs, etc
+  authQueryLoading: boolean       // any other query: currentHanzoUser, clientOrgs, etc
   isLoading(): boolean        // (authStateLoading || authQueryLoading)
 
   isAdmin(): boolean
@@ -27,4 +27,6 @@ interface AuthService {
   logout(): Promise<void>
 }
 
-export default AuthService
+export {
+  type AuthService as default
+} 
