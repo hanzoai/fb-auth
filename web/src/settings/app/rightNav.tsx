@@ -8,6 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import type { NavElement } from '~/types/app'
+import { type IconProp } from '@fortawesome/fontawesome-svg-core';
 
 export const COMMON: NavElement[] = [
   {
@@ -31,18 +32,18 @@ export const GUEST: NavElement[] = [
 export const LOGGEDIN: NavElement[] = [
   {
     title: 'Account',
-    uiElement: <FontAwesomeIcon icon={faUserCircle} size='1x' className='account'/>,
-    subElements: [
-      {
-        title: 'My Account',
-        to: '/account',
-        uiElement: <FontAwesomeIcon icon={faAddressCard} size='1x' className='my-account'/>
-      },
-      {
-        title: 'Log Out',
-        namedHandler: 'logout',
-        uiElement: <FontAwesomeIcon icon={faSignOutAlt} size='1x' className='logout'/>
-      },
-    ]
+    uiElement: <FontAwesomeIcon icon={faUserCircle as IconProp} size='1x' className='account'/>,
+      subElements: [
+        {
+          title: 'My Account',
+          to: '/account',
+          uiElement: <FontAwesomeIcon icon={faAddressCard as IconProp} size='1x' className='my-account'/>
+        },
+        {
+          title: 'Log Out',
+          namedHandler: 'logout',
+          uiElement: <FontAwesomeIcon icon={faSignOutAlt as IconProp} size='1x' className='logout'/>
+        },
+      ]
   },
 ]

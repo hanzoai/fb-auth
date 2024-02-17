@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { type ReactElement } from 'react'
 import selectn from 'selectn'
 
 import { splitCamelOrPascalCase } from '@hanzo/fb-auth-shared/util'

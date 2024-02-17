@@ -2,7 +2,7 @@ export default class Strings {
 
   _map: Map<string, string>
 
-  constructor(arr) {
+  constructor(arr: any) {
     this._map = new Map<string, string>(arr)
   }
 

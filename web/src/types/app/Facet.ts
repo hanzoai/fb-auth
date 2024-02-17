@@ -1,4 +1,4 @@
-import type NounDisplay from './NounDisplay'
+import type {NounDisplay} from './NounDisplay'
 
 export interface Facet {
   name:         string        // used in data: 'genres'

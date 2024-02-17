@@ -8,8 +8,6 @@ import {
   Video 
 } from '~/components'
 
-import lushVideo from './video/lush.mp4'
-
 import './caseStudy.scss'
 
 interface CaseStudyCardProps {
@@ -47,7 +45,7 @@ const CaseStudy: React.FC<any> = () => (<>
       <Link className='section-link' to='/'>See the companies we work with <span className='link-arrow'/></Link>      
       <Grid container className='split' justify='center'>
         <Grid item xs={12} md={6} >
-          <Video url={lushVideo} width='576px' height='576px' />
+          <Video url='./video/lush.mp4' width='576px' height='576px' rightJustify={undefined} />
         </Grid>
         <Grid item xs={12} md={6} className='split-copy'>
           <h2 className='case-title'>LUSH</h2>

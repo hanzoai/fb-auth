@@ -63,5 +63,4 @@ export type { FieldRenderDescriptor, RenderedFieldProps } from './FieldRenderer'
 export { default as creditCardImageUrlFromType, renderDefaultCCImage } from './creditCardFromType'
 export type { ImageDesc } from './creditCardFromType' // promote this?
 
-export { default as getTestTransaction} from './getTestTransaction'
 export { default as Bouncer} from './Bouncer'

@@ -1,12 +1,7 @@
-import React, { ReactElement } from 'react' 
+import React, { type ReactElement } from 'react' 
 import classNames from 'classnames'
 
 import { PaymentRounded } from '@material-ui/icons'
-
-import visaImage from '~assets/images/cc-images/VisaCard.svg'
-import masterCardImage from '~assets/images/cc-images/MasterCard.svg'
-import discoverCardImage from '~assets/images/cc-images/DiscoverCard.svg'
-import amexCardImage from '~assets/images/cc-images/AmexCard.svg'
 
 export interface ImageDesc {
   url: string,
@@ -15,19 +10,19 @@ export interface ImageDesc {
 
 const cardMap = new Map<string, ImageDesc>([
   ['visa', { 
-    url: visaImage,
+    url: '../../assets/images/cc-images/VisaCard.svg',
     alt: 'Visa'
   }],
   ['mastercard', { 
-    url: masterCardImage,
+    url: '../../assets/images/cc-images/MasterCard.svg',
     alt: 'MasterCard'
   }],
   ['discover', { 
-    url: discoverCardImage,
+    url: '../../assets/images/cc-images/DiscoverCard.svg',
     alt: 'Discover Card'
   }],
   ['amex', { 
-    url: amexCardImage,
+    url: '../../assets/images/cc-images/AmexCard.svg',
     alt: 'American Express Card'
   }],
 ])

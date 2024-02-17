@@ -1,17 +1,13 @@
 import React from 'react'
 import cx from 'classnames'
 
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@mui/styles'
 import type { Theme } from '@material-ui/core'
-
-import logo28 from './payminto-logo--28x32.png'
-import logo40 from './payminto-logo--40x45.webp'
-import logo60 from './payminto-logo--60x68.webp'
 
 const LOGOS = {
   small: {
     image: {
-      name: logo28,
+      name: './payminto-logo--28x32.png',
       w: 28,
       h: 32
     },
@@ -22,7 +18,7 @@ const LOGOS = {
   },
   med: {
     image: {
-      name: logo40,
+      name: './payminto-logo--40x45.webp',
       w: 40,
       h: 45
     },
@@ -30,7 +26,7 @@ const LOGOS = {
   },
   large: {
     image: {
-      name: logo60,
+      name: './payminto-logo--60x68.webp',
       w: 60,
       h: 68
     },
