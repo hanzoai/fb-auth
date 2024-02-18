@@ -4,7 +4,19 @@ import {
   observable, 
 } from 'mobx'
 
-import { v4 as generateUniqueId } from 'uuid'
+import type { User as FirebaseUser } from 'firebase/auth'
+import { 
+  collection, 
+  doc, 
+  getDoc,
+  getDocs,
+  onSnapshot, 
+  query, 
+  where, 
+  limit 
+} from 'firebase/firestore'
+
+//import { v4 as generateUniqueId } from 'uuid'
  
 import type {
   ClientOrg,
@@ -22,9 +34,9 @@ import Bouncer from '@/util/Bouncer'
 
 import type AuthService from './AuthService'
 import { 
-  requestPasswordUpdate as requestPasswordUpdate_remote,
+  //requestPasswordUpdate as requestPasswordUpdate_remote,
   auth as firebaseAuth,
-  firestore
+  fsDB
 } from './firebaseConf'
 
 const EXT = {
@@ -37,7 +49,7 @@ const adminBouncer = new Bouncer(process.env.NEXT_PUBLIC_HANZO_AUTH_ADMIN_EMAILS
  
 class AuthServiceImpl implements AuthService  {
  
-  currentFirebaseUser: firebase.default.User | undefined = undefined
+  currentFirebaseUser: FirebaseUser | undefined = undefined
   currentHanzoUser: HanzoFBAuthUser | undefined = undefined
   authStateLoading: boolean = false   // firebaseUser status is loading
   authQueryLoading: boolean = false      // any other query: currentHanzoUser, clientOrgs, etc
@@ -63,7 +75,7 @@ class AuthServiceImpl implements AuthService  {
     })
 
     this.disposers.push( firebaseAuth.onAuthStateChanged( 
-      async (fbUser: firebase.default.User | null) => {
+      async (fbUser: FirebaseUser | null) => {
 
         if (!fbUser) {
           console.log('LOGGED OUT')
@@ -72,9 +84,10 @@ class AuthServiceImpl implements AuthService  {
         }
         else {
           this._setCurrentFirebaseUser(fbUser)
+          
           this._setQueryLoading(true)
           if (!this.currentHanzoUser || this.currentHanzoUser.uid !== fbUser.uid) {
-            await this._refreshHanzoFBAuthUser()
+            await this._refreshHanzoUser()
           }
 
             // An undefined result means a new user has been created in the system
@@ -82,12 +95,13 @@ class AuthServiceImpl implements AuthService  {
             // We must call createNewUserFromEmailAndPassword() before creating the 
             // corresponding HanzoFBAuthUser, since we need to know the uid to assign.
           if (!!this.currentHanzoUser) {
-            this.disposers.push( await firestore
-              .collection(COLLECTIONS.HANZO_USERS)
-              .doc(fbUser.uid)
-              .onSnapshot( async (doc) => {
-                if (doc.exists) {
-                  let hanzoUser = doc.data() as HanzoFBAuthUser
+            const usersCol = collection(fsDB, COLLECTIONS.HANZO_USERS)
+            const userDoc = doc(usersCol, fbUser.uid)
+
+            this.disposers.push( 
+              onSnapshot(userDoc, async (docSnap) => {
+                if (docSnap.exists()) {
+                  let hanzoUser = docSnap.data() as HanzoFBAuthUser
                   hanzoUser = await this._getHanzoFBAuthUserTransientData(hanzoUser)
                   this._setCurrentHanzoFBAuthUser(hanzoUser)
                 }
@@ -100,7 +114,7 @@ class AuthServiceImpl implements AuthService  {
     ))
   }
 
-  private _setCurrentFirebaseUser(u: firebase.default.User | undefined): void {
+  private _setCurrentFirebaseUser(u: FirebaseUser | undefined): void {
     this.currentFirebaseUser = u
   }
 
@@ -115,16 +129,14 @@ class AuthServiceImpl implements AuthService  {
     return new Promise<UserOrgsResponse>( async(resolve, reject) => {
       try {
         this._setQueryLoading(true)
-        const userSnap = await firestore.collection(COLLECTIONS.HANZO_USERS)
-          .where('email', '==', email)
-          .limit(1)
-          .get()
-
+        const usersCol = collection(fsDB, COLLECTIONS.HANZO_USERS)
+        const usersQ = query(usersCol, where('email', '==', email), limit(1) )
+        const userSnap = await getDocs(usersQ)
         const user = userSnap.empty ? undefined : userSnap.docs[0].data() as HanzoFBAuthUser 
 
-        const adminOrgsSnap = await firestore.collection(COLLECTIONS.CLIENT_ORGS)
-          .where('adminEmail', '==', email)
-          .get()
+        const clientOrgsCol = collection(fsDB, COLLECTIONS.CLIENT_ORGS)
+        const orgsQ = query(clientOrgsCol, where('adminEmail', '==', email))
+        const adminOrgsSnap = await getDocs(orgsQ)
 
           // fill transient Data
           // and response data
@@ -138,11 +150,10 @@ class AuthServiceImpl implements AuthService  {
           })
         })
 
-        const memberOrgsSnap = await firestore.collection(COLLECTIONS.CLIENT_ORGS)
-          .where('users', 'array-contains', email)
-          .get()
+        const orgUsersQ = query(clientOrgsCol, where('users', 'array-contains', email), )
+        const memberOrgsSnap = await getDocs(orgUsersQ)
 
-          // fill transient Data
+          // Populate transient Data
           // and response data
         memberOrgsSnap.forEach((doc) => {
           const org = doc.data() as ClientOrg 
@@ -187,6 +198,10 @@ class AuthServiceImpl implements AuthService  {
   }: CreateUserParams): Promise<StatusResponse> {
 
     return new Promise<StatusResponse>( async(resolve, reject) => {
+      resolve({
+        status: 'ignore me'
+      })
+    /*
       try {
         this._setQueryLoading(true)
         const userCredential = await firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -211,12 +226,17 @@ class AuthServiceImpl implements AuthService  {
       finally {
         this._setQueryLoading(false)
       }
+      */
     })
   }
  
   public createClientOrg(params: ClientOrgParams): Promise<StatusResponse>  {
 
     return new Promise<StatusResponse>( async(resolve, reject) => {
+      resolve({
+        status: 'ignore me'
+      })
+      /*
       try {
         this._setQueryLoading(false)
 
@@ -256,12 +276,15 @@ class AuthServiceImpl implements AuthService  {
       finally {
         this._setQueryLoading(false)
       }
+      */
     })
   }
  
   public login(email: string, password: string): Promise<void> {
 
     return new Promise<void>((resolve, reject) => {
+      resolve()
+      /*
       this._setQueryLoading(true)
       firebaseAuth.signInWithEmailAndPassword(email, password)
         .then( async (userCred: firebase.default.auth.UserCredential) => {
@@ -297,11 +320,14 @@ class AuthServiceImpl implements AuthService  {
         .finally(() => {
           this._setQueryLoading(false)
         })
+        */
     })
   }
 
   public logout(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
+      resolve()
+      /*
       this._setQueryLoading(true)
       firebaseAuth.signOut()
         .then(() => {
@@ -315,12 +341,15 @@ class AuthServiceImpl implements AuthService  {
         .finally(() => {
           this._setQueryLoading(false)
         })
+      */
     })
   }
 
   public requestPasswordUpdate(email: string): Promise<StatusResponse> {
 
     return new Promise<StatusResponse>((resolve, reject) => {
+      resolve({ status: 'ignore me' })
+      /*
       this._setQueryLoading(true)
       requestPasswordUpdate_remote({ email, ext: EXT })
         .then(({data}) => {
@@ -333,12 +362,15 @@ class AuthServiceImpl implements AuthService  {
         .finally(() => {
           this._setQueryLoading(false)
         })
+       */
     })
   }
 
   public completePasswordUpdate(oobCode: string, password: string): Promise<void> {
 
     return new Promise<void>( async (resolve, reject) => {
+      resolve()
+      /*
       try {
         this._setQueryLoading(true)
         await firebaseAuth.checkActionCode(oobCode)
@@ -352,6 +384,7 @@ class AuthServiceImpl implements AuthService  {
       finally {
         this._setQueryLoading(false)
       }
+      */
     })
   }
  
@@ -360,9 +393,15 @@ class AuthServiceImpl implements AuthService  {
     return new Promise<HanzoFBAuthUser>( async(resolve, reject) => {
       try {
         this._setQueryLoading(true)
+
+        /*
         const adminOrgsSnap = await firestore.collection(COLLECTIONS.CLIENT_ORGS)
           .where('adminEmail', '==', user.email)
           .get()
+        */
+        const clientOrgsCol = collection(fsDB, COLLECTIONS.CLIENT_ORGS)
+        const adminQ = query(clientOrgsCol, where('adminEmail', '==', user.email))
+        const adminOrgsSnap = await getDocs(adminQ)
 
         user.orgs = [] 
         adminOrgsSnap.forEach((doc) => {
@@ -374,9 +413,8 @@ class AuthServiceImpl implements AuthService  {
           })
         })
 
-        const memberOrgsSnap = await firestore.collection(COLLECTIONS.CLIENT_ORGS)
-          .where('users', 'array-contains', user.email)
-          .get()
+        const memdersQ = query(clientOrgsCol, where('users', 'array-contains', user.email))
+        const memberOrgsSnap = await getDocs(memdersQ)
 
         memberOrgsSnap.forEach((doc) => {
           const org = doc.data() as ClientOrg 
@@ -398,7 +436,7 @@ class AuthServiceImpl implements AuthService  {
     })
   }
 
-  private _refreshHanzoFBAuthUser(): Promise<void> {
+  private _refreshHanzoUser(): Promise<void> {
     return new Promise<void>( async(resolve, reject) => {
       try {
         if ( !this.currentFirebaseUser ) {
@@ -406,7 +444,7 @@ class AuthServiceImpl implements AuthService  {
           return
         }
         this._setQueryLoading(true)
-        this._setCurrentHanzoFBAuthUser(await this._fetchHanzoFBAuthUser(this.currentFirebaseUser.uid))
+        this._setCurrentHanzoFBAuthUser(await this._fetchHanzoUser(this.currentFirebaseUser.uid))
         if (!this.currentHanzoUser) {
           reject('No HanzoFBAuthUser corresponding to logged in user found.')
           this._setQueryLoading(false)
@@ -424,15 +462,15 @@ class AuthServiceImpl implements AuthService  {
   }
 
 
-  private _fetchHanzoFBAuthUser(uid: string): Promise<HanzoFBAuthUser | undefined> {
+  private _fetchHanzoUser(uid: string): Promise<HanzoFBAuthUser | undefined> {
 
     return new Promise<HanzoFBAuthUser | undefined>( async (resolve, reject) => {
       try {
-        const userDoc = await firestore.collection(COLLECTIONS.HANZO_USERS)
-          .doc(uid)
-          .get()
-  
-        const user = userDoc.exists ? (userDoc.data() as HanzoFBAuthUser) : undefined
+        const usersCol = collection(fsDB, COLLECTIONS.HANZO_USERS)
+        const userDoc = doc(usersCol, uid)
+        const userDocSnap = await getDoc(userDoc)
+ 
+        const user = userDocSnap.exists() ? (userDocSnap.data() as HanzoFBAuthUser) : undefined
         if (!user) {
           resolve(undefined)
         }

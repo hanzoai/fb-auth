@@ -1,17 +1,8 @@
-/**
- * For now we are using firebase 8.0 syntax
- * with version 9.3.  
- * 
- * 9.x fixes a few bugs and is needed by a module we use
- * /compat/X provides the same imports etc. as version 8.0
- */
+import { initializeApp, type FirebaseOptions } from 'firebase/app'
+import { getFirestore } from 'firebase/firestore'
+import { getAuth } from 'firebase/auth'
 
-import firebase from 'firebase/compat/app'
-import 'firebase/compat/auth'
-import 'firebase/compat/functions'
-import 'firebase/compat/firestore'
-
-const app = firebase.initializeApp({
+const app = initializeApp({
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
     // Bad docs.  This seems to only be for Realtime Database
@@ -21,18 +12,20 @@ const app = firebase.initializeApp({
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
-})
+} satisfies FirebaseOptions )
 
-const auth = firebase.auth()
-const firestore = firebase.firestore()
+const fsDB = getFirestore(app, 'lux-auth') // we are not using default instance
+const auth = getAuth(app)
 
-auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+//auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
 
+/*
 if (process.env.NEXT_PUBLIC_FIREBASE_USE_EMULATOR === 'true') {
   firebase.functions().useEmulator('localhost', 5001)
   auth.useEmulator('http://localhost:9099')
 }
 
 export const requestPasswordUpdate = firebase.functions().httpsCallable('requestPasswordUpdate')
-export  { auth, firestore }
-export default app
+*/
+export  { app, auth, fsDB }
+//export default app

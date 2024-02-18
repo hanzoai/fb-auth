@@ -7,6 +7,7 @@ import siteDef from '../siteDef'
 import metadata from '../metadata'
 
 import { AuthServiceProvider } from '@/auth'
+//   <AuthServiceProvider >
 
 const RootLayout: React.FC<PropsWithChildren> = ({
   children
