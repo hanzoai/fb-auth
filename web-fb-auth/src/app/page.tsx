@@ -1,24 +1,21 @@
+'use client'
+
 import React  from 'react'
-import { Footer } from '@hanzo/ui/common'
-import { ApplyTypography, Main } from '@hanzo/ui/primitives'
+import { Main } from '@hanzo/ui/primitives'
 
-import Test from '@/test/Test'
+import { useAuthService } from '@/auth'
+import AuthUiComponent from '@/auth-ui-component'
 
-/* for example, as slug
-type Props = {
-  params: { slug: string }
-  searchParams?: { [key: string]: string | string[] | undefined }
+const UniversalPage = () => {
+  const {currentFirebaseUser, currentHanzoUser, } = useAuthService()
+  console.log('currentFirebaseUser', currentFirebaseUser)
+  console.log('currentHanzoUser', currentHanzoUser)
+
+  return (<>
+    <Main className='md:flex-row md:gap-4'>
+      <AuthUiComponent />
+    </Main>
+  </>)
 }
-*/ 
-import siteDef from '../siteDef'
-
-const UniversalPage = (/* { params, searchParams }: Props */) => (<>
-  <Main className='md:flex-row md:gap-4 '>
-    <ApplyTypography>
-      <Test />
-    </ApplyTypography>
-  </Main>
-  <Footer siteDef={siteDef} className='max-w-screen-2xl w-full pt-16 lg:mx-auto ' />
-</>)
 
 export default UniversalPage

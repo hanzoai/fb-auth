@@ -1,11 +1,13 @@
 'use client'
-import React, { useEffect, useCallback, useState } from 'react'
+
+import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 
 //import { getAuth } from 'firebase/auth'
 
 import { auth } from '@/auth/firebaseConf'
 import { type User, onAuthStateChanged, signOut} from 'firebase/auth'
+import { ApplyTypography } from '@hanzo/ui/primitives'
 
 // @ts-ignore
 const FirebaseUIComp = dynamic(() => import('firebaseui-react'), {
@@ -31,14 +33,15 @@ const AuthComponent: React.FC = () => {
         console.log("somtin went wrong :9 :((");
         console.error(error);
       },
-    }
-  };
+    },
+    formLabelStyles: { color: "#fff" },
+  }
 
     // @ts-ignore
   return <FirebaseUIComp auth={auth} config={config} />
 }
 
-const SignInScreen: React.FC = () => {
+const AuthUiComponent: React.FC = () => {
 
   const [user, setUser] = useState<User | null>(auth.currentUser);
 
@@ -50,8 +53,8 @@ const SignInScreen: React.FC = () => {
     return () => unsubscribe();
   }, [auth]);
 
-  return (<>
-        <h1>React FirebaseUI Component Demo</h1>
+  return (
+    <ApplyTypography className='w-full text-primary-fg'>
       {user ? (
         <div>
           <h3>Wellcome</h3>
@@ -59,13 +62,13 @@ const SignInScreen: React.FC = () => {
           <pre>{JSON.stringify({ user }, null, 2)}</pre>
         </div>
       ) : (
-        <div style={{ width: '25vw' }}>
+        <div className='w-full sm:w-96 mx-auto'>
           <AuthComponent />
         </div>
-
       )}
-  </>)
+    </ApplyTypography>
+  )
 }
 
-export default SignInScreen
+export default AuthUiComponent
 
