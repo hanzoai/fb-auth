@@ -12,18 +12,22 @@ import React, {
  const AuthServiceContext = React.createContext<AuthService | undefined>(undefined) 
  
  export const useAuthService = (): AuthService =>  {
-   return useContext(AuthServiceContext) as AuthService
+     useContext(AuthServiceContext) as AuthService
  }
  
  export const AuthServiceProvider: React.FC<PropsWithChildren> = ({ children }) => {
    
-   const serviceRef = useRef<AuthServiceImpl>(new AuthServiceImpl())
+   const serviceRef = useRef<AuthServiceImpl | undefined>(undefined)
  
    useEffect(() => {
+
+      if (!serviceRef.current) {
+        serviceRef.current = new AuthServiceImpl()
+      }
      // Anything in here is fired on component mount.
      return () => {
          // Anything in here is fired on component unmount.
-         serviceRef.current.disposer()
+         serviceRef.current?.disposer()
      }
    }, [])
    

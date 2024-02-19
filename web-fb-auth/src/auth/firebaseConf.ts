@@ -17,6 +17,8 @@ const app = initializeApp({
 const fsDB = getFirestore(app, 'lux-auth') // we are not using default instance
 const auth = getAuth(app)
 
+console.log("FB INSTANCES INITIALIZED")
+
 //auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
 
 /*

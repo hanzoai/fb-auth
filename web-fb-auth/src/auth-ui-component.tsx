@@ -18,7 +18,7 @@ const AuthComponent: React.FC = () => {
 
   const config = {
     // link back to this page for password resets
-    continueUrl: document.location.href,
+    //continueUrl: document.location.href,
     signInOptions: [
       "emailpassword", 
       "google.com",
@@ -30,7 +30,7 @@ const AuthComponent: React.FC = () => {
         console.log("successfully authenticated", user);
       },
       signInFailure: (error: any) => {
-        console.log("somtin went wrong :9 :((");
+        console.log("something went wrong :9 :((");
         console.error(error);
       },
     },
@@ -41,17 +41,8 @@ const AuthComponent: React.FC = () => {
   return <FirebaseUIComp auth={auth} config={config} />
 }
 
+/*
 const AuthUiComponent: React.FC = () => {
-
-  const [user, setUser] = useState<User | null>(auth.currentUser);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
-
-    return () => unsubscribe();
-  }, [auth]);
 
   return (
     <ApplyTypography className='w-full text-primary-fg'>
@@ -69,6 +60,6 @@ const AuthUiComponent: React.FC = () => {
     </ApplyTypography>
   )
 }
-
-export default AuthUiComponent
+*/
+export default AuthComponent
 
