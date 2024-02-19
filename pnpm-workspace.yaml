@@ -3,3 +3,4 @@ packages:
   - 'server/functions'
   - 'web'
   - 'web-fb-auth'
+  - 'auth-widget'
